@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+  <context id="DB2Tables" targetRuntime="MyBatis3">
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+        connectionURL="jdbc:mysql://127.0.0.1:3306/juliicasta"
+        userId="root"
+        password="">
+    </jdbcConnection>
+
+    <javaTypeResolver >
+      <property name="forceBigDecimals" value="false" />
+    </javaTypeResolver>
+
+    <javaModelGenerator targetPackage="com.shop.Juliicasta.Model" targetProject="Juliicasta" />
+
+    <sqlMapGenerator targetPackage="com.shop.Juliicasta.Mapper.Sql"  targetProject="Juliicasta/src/main/resources"/>
+
+    <javaClientGenerator type="XMLMAPPER" targetPackage="com.shop.Juliicasta.Mapper"  targetProject="Juliicasta"/>
+
+    <table tableName="account" domainObjectName="Account" > </table>
+	<table tableName="bill" domainObjectName="Bill" > </table>
+    <table tableName="billdetail" domainObjectName="BillDetail" > </table>
+    <table tableName="cart" domainObjectName="Cart" > </table>
+    <table tableName="cartdetail" domainObjectName="CartDetail" > </table>
+    <table tableName="category" domainObjectName="Category" > </table>
+    <table tableName="color" domainObjectName="Color" > </table>
+    <table tableName="comment" domainObjectName="Comment" > </table>
+    <table tableName="image" domainObjectName="Image" > </table>
+    <table tableName="product" domainObjectName="Product" > </table>
+    <table tableName="productdetail" domainObjectName="ProductDetail" > </table>
+    <table tableName="size" domainObjectName="Size" > </table>
+    <table tableName="status" domainObjectName="Status" > </table>
+    <table tableName="slide" domainObjectName="Slide" > </table>
+    <table tableName="contact" domainObjectName="Contact" > </table>
+  </context>
+</generatorConfiguration>

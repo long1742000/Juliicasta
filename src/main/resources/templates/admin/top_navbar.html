@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="shortcut icon" th:href="@{~/Images/logo.png}">
+<link rel="stylesheet" type="text/css" th:href="@{~/CSS/CssOfAdmin.css}">
+<script th:src="@{~/JS/JSOfAdmin.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title th:if="${user.role=='ROLE_ADMIN'}">Manager Julicasta</title>
+<title th:if="${user.role=='ROLE_EMPLOYEE'}">Julicasta staff</title>
+</head>
+<body>
+	<div th:fragment="top_navbar" class="top_navbar">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-3">
+					<a th:href="@{~/admin/Juliicasta/Manager/index}"><h2>JULIICASTA</h2></a>
+				</div>
+				<div class="col-6 search">
+					<form action="">
+						<input type="text" name="keyword" autocomplete="off" placeholder="Tìm kiếm...">
+						<button type="submit">Tìm kiếm <i class="fa fa-search" aria-hidden="true"></i></button>
+					</form>
+				</div>
+				<div class="col-3 dropdown">
+					<button th:if="${user.role=='ROLE_ADMIN'}" class="dropdown-toggle helloAdmin" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    					Xin chào, Admin
+  					</button>
+  					<button th:if="${user.role=='ROLE_EMPLOYEE'}" th:text="'Hello, '+${user.username}" class="dropdown-toggle helloAdmin" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+  					<div class="dropdown-menu helloAdmin-item" aria-labelledby="dropdownMenuButton">
+    					<a class="dropdown-item" href="#">Thông tin cá nhân</a>
+    					<form th:action="@{~/admin/Juliicasta/Manager/logout}" method="post">
+					    	<input class="dropdown-item" type="submit" value="Logout">
+					    </form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="shortcut icon" th:href="@{~/Images/logo.png}">
+<link rel="stylesheet" type="text/css" th:href="@{~/CSS/mycss.css}">
+<script th:src="@{~/JS/myjs.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Filter</title>
+</head>
+<body>
+	<div th:fragment="filter" class="filter">
+		<li class="title-menu-product">
+			<h3>Sắp xếp <i style="float: right" class="fa fa-sort" aria-hidden="true"></i></h3>
+		</li>
+		<li id="pr" class="menu-product-drop"><a href="#pr"
+			class="menu-product-btn">Theo giá</a>
+			<div class="menu-product-item">
+				<a name="sortPrice"
+					th:href="@{'~/user/product?idCate='+${session.idCate}+'&filter=Inc&page=1'}">Tăng
+					dần</a> <a name="sortPrice"
+					th:href="@{'~/user/product?idCate='+${session.idCate}+'&filter=Dec&page=1'}">Giảm
+					dần</a>
+			</div></li>
+
+		<li id="d" class="menu-product-drop"><a href="#d"
+			class="menu-product-btn">Theo ngày nhập</a>
+			<div class="menu-product-item">
+				<a name="sortDate"
+					th:href="@{'~/user/product?idCate='+${session.idCate}+'&filter=NO&page=1'}">Mới
+					- Cũ</a> <a name="sortDate"
+					th:href="@{'~/user/product?idCate='+${session.idCate}+'&filter=ON&page=1'}">Cũ
+					- Mới</a>
+			</div></li>
+		<li class="title-menu-product">
+			<h3>Lọc <i style="float: right" class="fa fa-filter" aria-hidden="true"></i></h3>
+		</li>
+		<li id="searchPrice" class="menu-product-drop"><a
+			href="#searchPrice" class="menu-product-btn">Theo giá từ x -> y</a>
+			<div class="menu-product-item">
+				<form th:action="@{~/user/product/price}" method="get">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-5"><input type="text" name="x" required="true" placeholder="Từ x" autocomplete="off"></div>
+							<div class="col-5"><input type="text" name="y" required="true" placeholder="Đến y" autocomplete="off"></div>
+							<div class="col-2">
+								<button type="submit">
+									<i class="fa fa-search"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+					
+				</form>
+			</div></li>
+		<li class="title-menu-product"></li>
+	</div>
+</body>
+</html>

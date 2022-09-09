@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="shortcut icon" th:href="@{~/Images/logo.png}">
+<link rel="stylesheet" type="text/css" th:href="@{~/CSS/CssOfAdmin.css}">
+<script th:src="@{~/JS/JSOfAdmin.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title th:if="${user.role=='ROLE_ADMIN'}">Manager Julicasta</title>
+<title th:if="${user.role=='ROLE_EMPLOYEE'}">Julicasta staff</title>
+
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
+
+</head>
+<body>
+	<div th:replace="admin/top_navbar :: top_navbar"></div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-2 menu-product">
+				<div th:replace="admin/menu :: menu"></div>
+			</div>
+			<div class="col-10">
+				<div class="container-fluid content">
+					<div id="billDetail" class="bill-confirm">
+						<h3 style="text-align: center" th:text="${bill.billno}"></h3>
+						<p style="text-align: center" th:text="'Ngày: '+${bill.datecreate}"></p>
+						<p th:text="'Tên người nhận: '+${accountDetail.fullname}">Tên người nhận:</p>
+						<p th:text="'Số điện thoại: '+${accountDetail.phone}">Số điện thoại:</p>
+						<p th:text="'Địa chỉ nhận: '+${accountDetail.address}">Địa chỉ nhận:</p>
+						<p>Chi tiết đơn hàng:</p>
+						<table>
+							<tr>
+								<th>Sản phẩm</th>
+								<th style="text-align: center">Số lượng</th>
+								<th style="text-align: right">Thành tiền</th>
+							</tr>
+							<tr id="container-cart" th:each="item, index:${listBillDetail}">
+								<td id="item-cart"><p th:text="${item.productname}"></p><p style="line-height: 0; font-size: 12px;" th:text="${item.sizename+' - '+item.colorname}"></p>
+								</td>
+								<td style="text-align: center"><p th:text="${item.quantity}"></p></td>
+								<td style="text-align: right"><p th:text="${item.amount+' VNĐ'}"></p></td>
+							</tr>
+						</table>
+						<hr>
+						<table>
+							<tr>
+								<td>Phí ship:</td>
+								<td style="text-align: right" th:text="${ship+' VNĐ'}"></td>
+							</tr>
+							<tr>
+								<td><strong style="font-size: 20px;">Tổng:</strong></td>
+								<td style="text-align: right; font-size: 20px;"><strong th:text="${total+' VNĐ'}"></strong></td>
+							</tr>
+						</table>
+						<hr>
+						<p th:unless="${emp}">Nhân viên tư vấn: Chưa có</p>
+						<p th:if="${emp}" th:text="'Nhân viên tư vấn: '+${emp.fullname}"></p>
+						<p th:text="'Trạng thái: '+${bill.statusname}"></p>
+						<form id="updateBill" th:if="${user.role=='ROLE_EMPLOYEE' && (bill.statusid==1 || bill.statusid==2 || bill.statusid==3)}">
+							<input name="billid" th:value="${bill.id}" hidden="true">
+							<input name="employee" th:value="${user.id}" hidden="true">
+							<input name="status" th:value="${bill.statusid}" hidden="true">
+							<button id="update" type="submit" class="bill-confirm-btn">Cập nhật trạng thái</button>
+						</form>
+						<form id="notelBill" th:if="${user.role=='ROLE_EMPLOYEE' && bill.statusid==3}">
+							<input name="billid" th:value="${bill.id}" hidden="true">
+							<input name="employee" th:value="${user.id}" hidden="true">
+							<button id="note" type="submit" class="bill-note">Đánh dấu bùng hàng</button>
+						</form>
+						<form id="updateBill" th:if="${user.role=='ROLE_ADMIN'}">
+							<input name="currentStatus" th:value="${bill.statusid}" hidden="true">
+							<input name="billid" th:value="${bill.id}" hidden="true">
+							<input name="employee" th:value="${user.id}" hidden="true">
+							Cập nhật trạng thái: <select name="status">
+								<option value="1">Mới</option>
+								<option value="2">Đang xử lý</option>
+								<option value="3">Đang giao</option>
+								<option value="4">Hoàn tất</option>
+								<option value="5">Hủy</option>
+								<option value="7">Bùng hàng</option>
+							</select>
+							<button id="update" type="submit" class="bill-confirm-btn">Xác nhận</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	$("#update").click(function(event) {
+		event.preventDefault();
+		var formdata = $("#updateBill").serializeArray();
+		json = {};
+		$.each(formdata, function(i, field) {
+			json[field.name] = field.value;
+		});
+		swal({
+			title: "Xác nhận cập nhật đơn hàng",
+			text: "Bạn thật sự muốn cập nhật đơn hàng này?",
+			icon: "warning",
+			buttons: true,
+			dangerMode: true,
+		})
+			.then((willDelete) => {
+				if (willDelete) {
+					$.ajax({
+						url: "/admin/Juliicasta/Manager/updateBill",
+						type: 'get',
+						data: {
+							datajson: JSON.stringify(json)
+						},
+						success: function() {
+							swal("Đã cập nhật trạng thái đơn hàng")
+							.then((value) => {
+								window.location.reload("#billDetail");
+							});
+						}
+					});
+				} else {
+					swal("Cancel thành công!");
+				}
+			});
+	})
+	
+		$("#note").click(function(event) {
+			event.preventDefault();
+			var formdata = $("#notelBill").serializeArray();
+			json = {};
+			$.each(formdata, function(i, field) {
+				json[field.name] = field.value;
+			});
+			swal({
+				title: "Xác nhận đánh dấu đơn hàng",
+				text: "Bạn thật sự muốn đánh dấu bùng hàng đơn hàng này?",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+				.then((willDelete) => {
+					if (willDelete) {
+						$.ajax({
+							url: "/admin/Juliicasta/Manager/noteBill",
+							type: 'get',
+							data: {
+								datajson: JSON.stringify(json)
+							},
+							success: function() {
+								swal("Đã note vào đơn hàng")
+								.then((value) => {
+									window.location.reload("#billDetail");
+								});
+							}
+						});
+					} else {
+						swal("Cancel thành công!");
+					}
+				});
+		})
+	</script>
+</body>
+</html>

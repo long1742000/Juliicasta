@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="shortcut icon" th:href="@{~/Images/logo.png}">
+<link rel="stylesheet" type="text/css" th:href="@{~/CSS/mycss.css}">
+<script th:src="@{~/JS/myjs.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Juliicasta</title>
+</head>
+<body class="bg-login">
+	<form class="registerForm" th:action="@{/user/registration}"
+		th:object="${registerForm}" method="post">
+		<h3>Đăng ký tài khoản</h3>
+		<input class="register-name" type="text" name="fullname"
+			placeholder="Tên..." required="true" autocomplete="off"> <input
+			class="register-email" type="email" name="email"
+			placeholder="Email..." required="true" autocomplete="off"> <input
+			class="register-phone" type="text" name="phone"
+			placeholder="Số điện thoại..." required="true" autocomplete="off">
+		<textarea class="register-address" name="address"
+			placeholder="Địa chỉ..." required="true"></textarea>
+		<input class="register-phone" type="text" name="username"
+			placeholder="Tên đăng nhập..." required="true" autocomplete="off"> <input
+			class="register-phone" type="password" name="password"
+			placeholder="Mật khẩu..." required="true"> <input th:object="${confirmpassword}"
+			class="register-phone" type="password" name="confirmpassword"
+			placeholder="Xác nhận mật khẩu..." required="true"> <input
+			type="submit" value="Đăng ký">
+	</form>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-6 back">
+				<button>
+					<a th:href="@{~/user/login}"><i class="fa fa-arrow-left"
+						aria-hidden="true"></i> Quay lại</a>
+				</button>
+			</div>
+		</div>
+	</div>
+	<script th:inline="javascript">
+		var er = /*[[${er}]]*/ "Test";
+		swal("Oops", er, "error")
+	</script>
+</body>
+</html>

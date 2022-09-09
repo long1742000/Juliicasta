@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="shortcut icon" th:href="@{~/Images/logo.png}">
+<link rel="stylesheet" type="text/css" th:href="@{~/CSS/CssOfAdmin.css}">
+<script th:src="@{~/JS/myjs.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Filter</title>
+</head>
+<body>
+	<div th:fragment="menu" class="filter">
+		<li class="menu-product-drop"><a th:href="@{~/admin/Juliicasta/Manager/index}"
+			class="menu-product-btn">Bảng theo dõi <i class="fa fa-tachometer" aria-hidden="true"></i></a>
+		</li>
+		<li id="#account" class="menu-product-drop"><a href="#account"
+			class="menu-product-btn">Tài khoản <i class="fa fa-user" aria-hidden="true"></i></a>
+			<div class="menu-product-item">
+				<a name="unlock"
+					th:href="@{'~/admin/Juliicasta/Manager/listAccount?enable=1'}">Đang kích hoạt <i class="fa fa-unlock" aria-hidden="true"></i></a>
+				<a name="lock"
+					th:href="@{'~/admin/Juliicasta/Manager/listAccount?enable=0'}">Đã khóa <i class="fa fa-lock" aria-hidden="true"></i></a>
+			</div>
+		</li>
+		<li class="menu-product-drop"><a th:href="@{'~/admin/Juliicasta/Manager/listCategory'}"
+			class="menu-product-btn">Danh sách thể loại <i class="fa fa-list" aria-hidden="true"></i></a>
+		</li>
+		<li id="product" class="menu-product-drop"><a th:href="@{'~/admin/Juliicasta/Manager/listProduct?cate=0'}"
+			class="menu-product-btn">Sản phẩm <i class="fa fa-archive" aria-hidden="true"></i></a>
+			<div class="menu-product-item" th:each="item:${listCate}">
+				<a name="item"
+					th:href="@{'~/admin/Juliicasta/Manager/listProduct?cate='+${item.id}}" th:text="${item.name}"></a>
+			</div>
+		</li>
+		<li class="menu-product-drop"><a th:href="@{'~/admin/Juliicasta/Manager/listBill'}"
+			class="menu-product-btn">Danh sách hóa đơn <i class="fa fa-file-text-o" aria-hidden="true"></i></a>
+		</li>
+		<li class="menu-product-drop"><a th:href="@{'~/admin/Juliicasta/Manager/listContact'}"
+			class="menu-product-btn">Chăm sóc khách hàng <i class="fa fa-comments" aria-hidden="true"></i></a>
+		</li>
+	</div>
+</body>
+</html>

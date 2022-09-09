@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="shortcut icon" th:href="@{~/Images/logo.png}">
+<link rel="stylesheet" type="text/css" th:href="@{~/CSS/mycss.css}">
+<script th:src="@{~/JS/myjs.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Juliicasta</title>
+</head>
+<body>
+	<div th:replace="user/menu :: menu"></div>
+	
+	<div id="billDetail" class="bill-confirm">
+		<a th:href="@{~/user/infor}" class="close" >×</span></a>
+		<h3 style="text-align: center" th:text="${bill.billno}"></h3>
+		<p style="text-align: center" th:text="'Ngày: '+${bill.datecreate}"></p>
+		<p th:text="'Tên người nhận: '+${session.user.fullname}">Tên người nhận:</p>
+		<p th:text="'Số điện thoại: '+${session.user.phone}">Số điện thoại:</p>
+		<p th:text="'Địa chỉ nhận: '+${session.user.address}">Địa chỉ nhận:</p>
+		<p>Chi tiết đơn hàng:</p>
+		<table>
+			<tr>
+				<th>Sản phẩm</th>
+				<th style="text-align: center">Số lượng</th>
+				<th style="text-align: right">Thành tiền</th>
+			</tr>
+			<tr id="container-cart" th:each="item, index:${listBillDetail}">
+				<td id="item-cart"><p th:text="${item.productname}"></p><p style="line-height: 0; font-size: 12px;" th:text="${item.sizename+' - '+item.colorname}"></p>
+				</td>
+				<td style="text-align: center"><p th:text="${item.quantity}"></p></td>
+				<td style="text-align: right"><p th:text="${item.amount+' VNĐ'}"></p></td>
+			</tr>
+		</table>
+		<hr>
+		<table>
+			<tr>
+				<td>Phí ship:</td>
+				<td style="text-align: right" th:text="${ship+' VNĐ'}"></td>
+			</tr>
+			<tr>
+				<td><strong style="font-size: 20px;">Tổng:</strong></td>
+				<td style="text-align: right; font-size: 20px;"><strong th:text="${total+' VNĐ'}"></strong></td>
+			</tr>
+		</table>
+		<hr>
+		<p th:if="${bill.statusid!=4 && bill.statusid!=5}" style="font-size: 25px; text-align: center;">___Thanh toán khi nhận hàng___</p>
+		<form id="cancelBill" th:if="${bill.statusid==1 || bill.statusid==2}">
+			<input name="billid" th:value="${bill.id}" hidden="true">
+			<button id="cancel" type="submit" class="bill-confirm-btn">Hủy hóa đơn</button>
+		</form>
+	</div>
+	
+	<div th:replace="user/footer :: footer"></div>
+	
+	<script type="text/javascript">
+		$("#cancel").click(function(event) {
+			event.preventDefault();
+			var formdata = $("#cancelBill").serializeArray();
+			json = {};
+			$.each(formdata, function(i, field) {
+				json[field.name] = field.value;
+			});
+			swal({
+				title: "Xác nhận hủy đơn hàng",
+				text: "Bạn thật sự muốn hủy đơn hàng này?",
+				icon: "warning",
+				buttons: true,
+				dangerMode: true,
+			})
+				.then((willDelete) => {
+					if (willDelete) {
+						$.ajax({
+							url: "/user/cancelBill",
+							type: 'get',
+							data: {
+								datajson: JSON.stringify(json)
+							},
+							success: function() {
+								swal("Đơn hàng đã hủy")
+								.then((value) => {
+									window.location.reload("#billDetail");
+								});
+							}
+						});
+					} else {
+						swal("Đơn hàng của bạn vẫn an toàn");
+					}
+				});
+		})
+	</script>
+</body>
+</html>

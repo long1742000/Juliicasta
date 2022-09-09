@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="shortcut icon" th:href="@{~/Images/logo.png}">
+<link rel="stylesheet" type="text/css" th:href="@{~/CSS/mycss.css}">
+<script th:src="@{~/JS/myjs.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Menu</title>
+</head>
+<body>
+	<div th:fragment="menu" class="menu">
+		<ul>
+			<li><a th:href="@{~/user/}">Trang chủ</a></li>
+			<li><a th:href="@{~/user/product?idCate=0&filter=0&page=1}">Sản phẩm</a>
+				<div class="sub-menu">
+					<ul th:each="item:${listCate}">
+						<li><a th:href="@{'~/user/product?idCate='+${item.id}+'&filter=0&page=1'}" th:utext="${item.name}"></a></li>
+					</ul>
+				</div></li>
+			<li><a th:href="@{/user/contact}">Liên hệ</a></li>
+			<li th:unless="${session.user}"><a href="#"><i
+					class="fa fa-user"></i></a>
+				<div class="sub-menu">
+					<ul>
+						<li><a th:href="@{/user/login}">Đăng nhập</a></li>
+					</ul>
+				</div></li>
+			<li th:if="${session.user}"><a href="#"
+				th:text="${session.user.username}"><i class="fa fa-user"></i></a>
+				<div class="sub-menu">
+					<ul>
+						<li><a th:href="@{/user/infor}">Thông tin</a></li>
+						<li><a th:href="@{'~/user/cart/'+${session.user.id}}">Giỏ hàng</a></li>
+						<li><a href="#" data-toggle="modal"
+							data-target="#logoutModal">Đăng xuất</a></li>
+					</ul>
+				</div></li>
+		</ul>
+		<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Juliicasta</h5>
+						<button class="close" type="button" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">Bạn muốn đăng xuất ???</div>
+					<div class="modal-footer">
+						<a class="cancel-btn" href="#" data-dismiss="modal">Hủy</a> <a
+							class="logout-btn" th:href="@{/user/logout}">Đăng xuất</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

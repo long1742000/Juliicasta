@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="shortcut icon" th:href="@{~/Images/logo.png}">
+<link rel="stylesheet" type="text/css" th:href="@{~/CSS/mycss.css}">
+<script th:src="@{~/JS/myjs.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Juliicasta</title>
+</head>
+<body>
+	<div th:replace="user/menu :: menu"></div>
+	<div class="container">
+		<div class="col-12 changeEmail">
+			<h1>Thay đổi email</h1>
+			<form>
+			<table>
+				<tr>
+					<td>Email mới:</td>
+					<td><input id="email" type="email" name="email" placeholder="Email mới..." required="required" autocomplete="off"></td>
+					<td><a href="#" onclick="return sendOTP()">Gửi OTP</a></td>
+				</tr>
+				<tr>
+					<td>Mã OTP:</td>
+					<td><input type="text" name="OTP" placeholder="Mã OTP..." required="required" autocomplete="off"></td>
+				</tr>
+				<tr>
+					<td colspan="2"><button type="submit">Đổi mật khẩu</button></td>
+				</tr>
+			</table>
+			</form>
+		</div>
+		<div class="col-12 editInfor">
+			<h1>Thay đổi thông tin đặt hàng</h1>
+			<form th:action="@{~/user/updateInfor}" method="post">
+			<table>
+				<tr>
+					<td>Họ và tên:</td>
+					<td><input th:value="${user.fullname}" type="text" name="name" placeholder="Họ và tên..." required="required" autocomplete="off"></td>
+				</tr>
+				<tr>
+					<td>Số điện thoại:</td>
+					<td><input th:value="${user.phone}" type="text" name="phone" placeholder="Số điện thoại..." required="required" autocomplete="off"></td>
+				</tr>
+				<tr>
+					<td>Địa chỉ:</td>
+					<td><textarea th:text="${user.address}" type="text" name="address" placeholder="Địa chỉ..." required="required"></textarea></td>
+				</tr>
+				<tr>
+					<td colspan="2"><button type="submit">Cập nhật</button></td>
+				</tr>
+			</table>
+			</form>
+		</div>
+	</div>
+	<div th:replace="user/footer :: footer"></div>
+	<script th:inline="javascript">
+		var er = /*[[${er}]]*/ "Test";
+		swal("Oops", er, "error")
+	</script>
+	<script th:inline="javascript">
+		var ok = /*[[${ok}]]*/ "Test";
+		swal("Success", ok, "success")
+	</script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="shortcut icon" th:href="@{~/Images/logo.png}">
+<link rel="stylesheet" type="text/css" th:href="@{~/CSS/mycss.css}">
+<script th:src="@{~/JS/myjs.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Pagination</title>
+</head>
+<body>
+	<div th:fragment="paginationDetail" class="row mt-3">
+		<div class="pagination">	
+			<a th:href="@{'~/user/product/detail/'+${proId}+'/?page=1'"><i class="fa fa-angle-left" aria-hidden="true"></i><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+			<a th:href="@{'~/user/product/detail/'+${proId}+'/?page='+${pre}"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+			<a class="active" th:href="@{'~/user/product/detail/'+${proId}+'/?page='+${page}" th:text="${page}">#</a>
+			<a th:href="@{'~/user/product/detail/'+${proId}+'/?page='+${next}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+			<a th:href="@{'~/user/product/detail/'+${proId}+'/?page='+${totalpage}"><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-angle-right" aria-hidden="true"></i></a>       
+		</div>
+	</div>
+</body>
+</html>

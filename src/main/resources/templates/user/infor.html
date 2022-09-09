@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="shortcut icon" th:href="@{~/Images/logo.png}">
+<link rel="stylesheet" type="text/css" th:href="@{~/CSS/mycss.css}">
+<script th:src="@{~/JS/myjs.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Juliicasta</title>
+</head>
+<body>
+	<div th:replace="user/menu :: menu"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-5 information">
+				<div class="col-12 information-account">
+					<div class="information-avatar">
+						<img class="avatar" th:src="@{~/Images/logo.png}">
+					</div>
+					<p class="username" th:text="${session.user.username}"></p>
+					<p class="email"><small th:text="${session.user.email}"></small></p>
+					<p style="text-align: center;"><a href="#" th:onclick="'return sendEmail('+${session.user.id}+')'" data-toggle="modal"
+							data-target="#changePassword">Đổi mật khẩu <i class="fa fa-key" aria-hidden="true"></i></a></p>
+					<br>
+				</div>
+				<div class="col-12 information-blabla">
+					<p class="title">Thông tin đặt hàng</p>
+					<table>
+						<tr>
+							<td class="col1">Họ và tên:</td>
+							<td class="col2" th:text="${session.user.fullname}"></td>
+						</tr>
+						<tr>
+							<td class="col1">Số điện thoại:</td>
+							<td class="col2" th:text="${session.user.phone}"></td>
+						</tr>
+						<tr>
+							<td class="col1">Địa chỉ giao hàng:</td>
+							<td class="col2" th:text="${session.user.address}"></td>
+						</tr>
+						<tr>
+							<td colspan="2">
+								<a class="btn btn-changeInfor" data-toggle="modal" data-target="#login">Chỉnh sửa thông tin đặt hàng <i class="fa fa-pencil" aria-hidden="true"></i></a>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="col-7 listBill">
+				<h1>Theo dõi đơn hàng</h1>
+				<table>
+					<tr>
+						<th style="text-align: left;">Bill No.</th>
+						<th style="text-align: center;">Ngày đặt hàng</th>
+						<th style="text-align: right;">Trạng thái</th>
+					</tr>
+					<tr th:each="item, index:${listBill}">
+						<td style="text-align: left;"><a th:href="@{'~/user/billDetail/'+${item.id}}" th:text="${item.billno}"></a></td>
+						<td style="text-align: center; color: #CCCCCC;" th:text="${item.datecreate}"></td>
+						<td th:if="${item.statusid==1}" style="text-align: right; color: red;" th:text="${item.statusname}"></td>
+						<td th:if="${item.statusid==2}" style="text-align: right; color: #EEEE00;" th:text="${item.statusname}"></td>
+						<td th:if="${item.statusid==3}" style="text-align: right; color: green;" th:text="${item.statusname}"></td>
+						<td th:if="${item.statusid==4}" style="text-align: right; color: #CCCCCC;" th:text="${item.statusname}"></td>
+					</tr>
+				</table>
+			</div>
+		</div>	
+	</div>
+	<div th:replace="user/footer :: footer"></div>
+	
+	<div class="modal fade" id="changePassword" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Đổi mật khẩu</h5>
+						<button class="close" type="button" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form th:action="@{/user/changePassword}" method="post">
+							<table class="changePassword">
+								<tr>
+									<td>Mã OTP:</td>
+									<td><input type="text" name="OTP" placeholder="Mã OTP..." required="required"></td>
+								</tr>
+								<tr>
+									<td>Mật khẩu mới:</td>
+									<td><input type="password" name="newPass" placeholder="Mật khẩu mới..." required="required"></td>
+								</tr>
+								<tr>
+									<td>Xác nhận mật khẩu mới:</td>
+									<td><input type="password" name="confirmPass" placeholder="Xác nhận mật khẩu mới..." required="required"></td>
+								</tr>
+								<tr>
+									<td colspan="2"><button type="submit">Đổi mật khẩu</button></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="modal fade" id="login" tabindex="-1" role="dialog"
+			aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Vui lòng nhập mật khẩu để tiếp tục</h5>
+						<button class="close" type="button" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">×</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form th:action="@{/user/loginToEditInfor}" method="post">
+							<table class="changePassword">
+								<tr>
+									<td>Mật khẩu: </td>
+									<td><input type="password" name="password" placeholder="Mật khẩu..." required="required"></td>
+								</tr>
+								<tr>
+									<td colspan="2"><button type="submit">Tiếp tục</button></td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	<script th:inline="javascript">
+		var er = /*[[${er}]]*/ "Test";
+		swal("Oops", er, "error")
+	</script>
+	<script th:inline="javascript">
+		var ok = /*[[${ok}]]*/ "Test";
+		swal("Success", ok, "success")
+	</script>
+</body>
+</html>

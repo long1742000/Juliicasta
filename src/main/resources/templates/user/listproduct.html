@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="shortcut icon" th:href="@{~/Images/logo.png}">
+<link rel="stylesheet" type="text/css" th:href="@{~/CSS/mycss.css}">
+<script th:src="@{~/JS/myjs.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Juliicasta</title>
+</head>
+<body>
+	<div th:replace="user/menu :: menu"></div>
+	<div class="container-fluid mt-3 mb-3">
+		<div class="row">
+			<div class="col-3 menu-product">
+				<div th:replace="user/filter :: filter"></div>
+			</div>
+			<div class="col-9">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-8">
+							<h2 th:if="${cate}" style="font-family: Cursive; color: #F08080" th:text="${cate}">Sản phẩm</h2>
+						</div>
+						<div class="col-4 searchByName">
+							<form th:action="@{~/user/product/search}" method="get">
+								<div class="searchName">
+									<input type="text" name="searchName"
+										placeholder="Search name..." required="true" autocomplete="off">
+									<button type="submit">
+										<i class="fa fa-search"></i>
+									</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+				<hr>
+				<div class="container-fluid">
+					<div class="row" id="content">
+						<div th:if="${noneProduct}">
+							<h5 style="color: #DDDDDD" th:text="${noneProduct}"></h5>
+						</div>
+						<div th:each="item:${listProduct}" class="col-3 mt-3">
+							<div class="box m-auto">
+								<div class="slide-img">
+									<img th:src="@{'~/Images/Products/'+${item.mainimage}}" alt="1" />
+									<div class="overlay">
+										<a th:href="@{'~/user/product/detail/'+${item.id}}" class="buy-btn">Chi tiết</a>
+									</div>
+								</div>
+								<div class="detail-box">
+									<div class="type">
+										<a th:text="${item.name}"></a> <span th:text="${item.code}"></span>
+									</div>
+									<span class="price" th:text="${item.price} + ' VND'"></span>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<div th:replace="user/pagination :: pagination"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script th:inline="javascript">
+		var error = /*[[${error}]]*/ "Test";
+		swal("Oops", error, "error")
+	</script>
+</body>
+</html>

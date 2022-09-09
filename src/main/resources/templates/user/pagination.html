@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="shortcut icon" th:href="@{~/Images/logo.png}">
+<link rel="stylesheet" type="text/css" th:href="@{~/CSS/mycss.css}">
+<script th:src="@{~/JS/myjs.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Pagination</title>
+</head>
+<body>
+	<div th:fragment="pagination" class="row mt-3">
+		<div class="pagination">
+			<a th:if="${session.search==2}" th:href="@{'~/user/product/price?x='+${x}+'&y='+${y}+'&page=1'}"><i class="fa fa-angle-left" aria-hidden="true"></i><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+			<a th:if="${session.search==2}" th:href="@{'~/user/product/price?x='+${x}+'&y='+${y}+'&page='+${pre}}"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+			<a th:if="${session.search==2 && (page-2>0)}" th:href="@{'~/user/product/price?x='+${x}+'&y='+${y}+'&page='+${page-2}}" th:text="${page-2}">#</a>
+			<a th:if="${session.search==2 && (page-1>0)}" th:href="@{'~/user/product/price?x='+${x}+'&y='+${y}+'&page='+${page-1}}" th:text="${page-1}">#</a>
+			<a th:if="${session.search==2}" class="active" th:href="@{'~/user/product/price?x='+${x}+'&y='+${y}+'&page='+${page}}" th:text="${page}">#</a>
+			<a th:if="${session.search==2 && (page+1<=totalpage)}" th:href="@{'~/user/product/price?x='+${x}+'&y='+${y}+'&page='+${page+1}}" th:text="${page+1}">#</a>
+			<a th:if="${session.search==2 && (page+2<=totalpage)}" th:href="@{'~/user/product/price?x='+${x}+'&y='+${y}+'&page='+${page+2}}" th:text="${page+2}">#</a>
+			<a th:if="${session.search==2}" th:href="@{'~/user/product/price?x='+${x}+'&y='+${y}+'&page='+${next}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+			<a th:if="${session.search==2}" th:href="@{'~/user/product/price?x='+${x}+'&y='+${y}+'&page='+${totalpage}}"><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+			
+			<a th:if="${session.search==1}" th:href="@{'~/user/product/search?searchName='+${session.keyword}+'&page=1'}"><i class="fa fa-angle-left" aria-hidden="true"></i><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+			<a th:if="${session.search==1}" th:href="@{'~/user/product/search?searchName='+${session.keyword}+'&page='+${pre}}"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+			<a th:if="${session.search==1 && (page-2>0)}" th:href="@{'~/user/product/search?searchName='+${session.keyword}+'&page='+${page-2}}" th:text="${page-2}">#</a>
+			<a th:if="${session.search==1 && (page-1>0)}" th:href="@{'~/user/product/search?searchName='+${session.keyword}+'&page='+${page-1}}" th:text="${page-1}">#</a>
+			<a th:if="${session.search==1}" class="active" th:href="@{'~/user/product/search?searchName='+${session.keyword}+'&page='+${page}}" th:text="${page}">#</a>
+			<a th:if="${session.search==1 && (page+1<=totalpage)}" th:href="@{'~/user/product/search?searchName='+${session.keyword}+'&page='+${page+1}}" th:text="${page+1}">#</a>
+			<a th:if="${session.search==1 && (page+2<=totalpage)}" th:href="@{'~/user/product/search?searchName='+${session.keyword}+'&page='+${page+2}}" th:text="${page+2}">#</a>
+			<a th:if="${session.search==1}" th:href="@{'~/user/product/search?searchName='+${session.keyword}+'&page='+${next}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+			<a th:if="${session.search==1}" th:href="@{'~/user/product/search?searchName='+${session.keyword}+'&page='+${totalpage}}"><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-angle-right" aria-hidden="true"></i></a>    
+
+			<a th:if="${session.search==0}" th:href="@{'~/user/product?idCate='+${session.idCate}+'&filter='+${session.filter}+'&page=1'}"><i class="fa fa-angle-left" aria-hidden="true"></i><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+			<a th:if="${session.search==0}" th:href="@{'~/user/product?idCate='+${session.idCate}+'&filter='+${session.filter}+'&page='+${pre}}"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+			<a th:if="${session.search==0 && (page-2>0)}" th:href="@{'~/user/product?idCate='+${session.idCate}+'&filter='+${session.filter}+'&page='+${page-2}}" th:text="${page-2}">#</a>
+			<a th:if="${session.search==0 && (page-1>0)}" th:href="@{'~/user/product?idCate='+${session.idCate}+'&filter='+${session.filter}+'&page='+${page-1}}" th:text="${page-1}">#</a>
+			<a th:if="${session.search==0}" class="active" th:href="@{'~/user/product?idCate='+${session.idCate}+'&filter='+${session.filter}+'&page='+${page}}" th:text="${page}">#</a>
+			<a th:if="${session.search==0 && (page+1<=totalpage)}" th:href="@{'~/user/product?idCate='+${session.idCate}+'&filter='+${session.filter}+'&page='+${page+1}}" th:text="${page+1}">#</a>
+			<a th:if="${session.search==0 && (page+2<=totalpage)}" th:href="@{'~/user/product?idCate='+${session.idCate}+'&filter='+${session.filter}+'&page='+${page+2}}" th:text="${page+2}">#</a>
+			<a th:if="${session.search==0}" th:href="@{'~/user/product?idCate='+${session.idCate}+'&filter='+${session.filter}+'&page='+${next}}"><i class="fa fa-angle-right" aria-hidden="true"></i></a>
+			<a th:if="${session.search==0}" th:href="@{'~/user/product?idCate='+${session.idCate}+'&filter='+${session.filter}+'&page='+${totalpage}}"><i class="fa fa-angle-right" aria-hidden="true"></i><i class="fa fa-angle-right" aria-hidden="true"></i></a>    
+		</div>
+	</div>
+</body>
+</html>

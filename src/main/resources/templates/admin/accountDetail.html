@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="shortcut icon" th:href="@{~/Images/logo.png}">
+<link rel="stylesheet" type="text/css" th:href="@{~/CSS/CssOfAdmin.css}">
+<script th:src="@{~/JS/JSOfAdmin.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title th:if="${user.role=='ROLE_ADMIN'}">Manager Julicasta</title>
+<title th:if="${user.role=='ROLE_EMPLOYEE'}">Julicasta staff</title>
+
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
+
+</head>
+<body>
+	<div th:replace="admin/top_navbar :: top_navbar"></div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-2 menu-product">
+				<div th:replace="admin/menu :: menu"></div>
+			</div>
+			<div class="col-10">
+				<div class="container-fluid content">
+					<h1>Chi tiết tài khoản</h1>
+					<hr>
+					<div class="container-fluid">
+						<div class="col-12">
+							<table class="accountDetail">
+								<tr>
+									<td>Họ và tên:</td>
+									<td th:text="${accountDetail.fullname}"></td>
+								</tr>
+								<tr>
+									<td>Số điện thoại:</td>
+									<td th:text="${accountDetail.phone}"></td>
+								</tr>
+								<tr>
+									<td>Email:</td>
+									<td th:text="${accountDetail.email}"></td>
+								</tr>
+								<tr>
+									<td>Địa chỉ:</td>
+									<td th:text="${accountDetail.address}"></td>
+								</tr>
+								<tr>
+									<td>Username:</td>
+									<td th:text="${accountDetail.username}"></td>
+								</tr>
+								<tr>
+									<td>Trạng thái:</td>
+									<td th:if="${accountDetail.enable}" style="color: green;">Kích hoạt <i class="fa fa-unlock" aria-hidden="true"></i> <a th:onclick="'changeAccountStatus('+${accountDetail.id}+')'" class="btn btn-danger changeStatus" href="#"><i class="fa fa-lock" aria-hidden="true"></i></a></td>
+									<td th:unless="${accountDetail.enable}" style="color: red;">Khóa <i class="fa fa-lock" aria-hidden="true"></i> <a th:onclick="'changeAccountStatus('+${accountDetail.id}+')'" class="btn btn-success changeStatus" href="#"><i class="fa fa-unlock" aria-hidden="true"></i></a></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<br>
+					<h1>Danh sách hóa đơn</h1>
+					<hr>
+					<table id="example" class="display" style="width: 100%;">
+						<thead>
+							<tr>
+								<th>Bill no.</th>
+								<th>Ngày đặt hàng</th>
+								<th>Trạng thái</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="item, index:${listBill}">
+								<td th:text="${item.billno}"></td>
+								<td th:text="${item.datecreate}"></td>
+								<td th:if="${item.statusid==1}" style="color: red;" th:text="${item.statusname}"></td>
+								<td th:if="${item.statusid==2}" style="color: #EEEE00;" th:text="${item.statusname}"></td>
+								<td th:if="${item.statusid==3}" style="color: green;" th:text="${item.statusname}"></td>
+								<td th:if="${item.statusid==4}" style="color: #CCCCCC;" th:text="${item.statusname}"></td>
+								<td><a class="btn btn-success"
+									th:href="@{'~/admin/Juliicasta/Manager/Bill?billId='+${item.id}}">Chi tiết</a></td>
+							</tr>
+						</tbody>
+					</table>
+					<br>
+				</div>
+			</div>
+		</div>
+	</div>		
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script
+		src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#example').DataTable();
+		});
+	</script>
+</body>
+</html>

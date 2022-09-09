@@ -1,0 +1,391 @@
+/* Login form */
+.bg-login{
+    background-color: #708090;
+    background-size: cover;
+    font-family: Arial;
+}
+
+.loginForm{
+    width: 400px;
+    padding: 40px;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    text-align: center;
+}
+
+.loginForm input[type = "text"], .loginForm input[type = "password"]{
+    border: 0;
+    background: none;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    border: 2px solid #708090;
+    padding: 14px 10px;
+    width: 200px;
+    outline: none;
+    color: #708090;
+}
+
+.loginForm input[type = "submit"]{
+    border: 2px solid #708090;
+    background-color: #708090;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    padding: 14px 40px;
+    outline: none;
+    color: white;
+    border-radius: 24px;
+    transition: 0.25s;
+    cursor: pointer;
+}
+
+.loginForm input[type = "submit"]:hover{
+    background: white;
+    color: #708090;
+    font-size: 20px;
+}
+
+/* Top navbar */
+.top_navbar{
+	height: 50px;
+	width: 100%;
+	background-color: #708090;
+	color: white;
+}
+
+.top_navbar a{
+	color: white;
+}
+
+.top_navbar a:hover{
+	color: #DDDDDD;
+	text-decoration: none;
+}
+
+.search {
+	padding-top: 10px;
+}
+
+.search input[type = "text"]{
+	width: 80%;
+	padding-left: 10px;
+	color: #708090;
+}
+
+.search button{
+	background: none;
+	border-color: white;
+	color: white;
+}
+
+.search button:hover{
+	border-color: #DDDDDD;
+	color: #DDDDDD;
+}
+
+.helloAdmin{
+	background-color: #708090;
+	border: none;
+	color: white;
+	padding-top: 10px;
+}
+
+.helloAdmin:hover{
+	color: #DDDDDD;
+}
+
+.helloAdmin:focus{
+	outline: none;
+}
+
+.helloAdmin-item a{
+	color: #708090;
+}
+
+.helloAdmin-item a:hover{
+	color: #DDDDDD;
+}
+
+.helloAdmin-item input{
+	color: #708090;
+}
+
+.helloAdmin-item input:hover{
+	color: #DDDDDD;
+}
+
+
+/* Menu */
+.menu-product{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: Cursive;
+    text-decoration: none;
+    background-color: #708090;
+    min-height: 100vh;
+}
+
+.menu-product-drop{
+    width: 95%;
+    overflow: hidden;
+}
+
+.menu-product-drop i{
+	float: right;
+}
+
+.menu-product-item{
+    overflow: hidden;
+}
+
+.menu-product-btn{
+    display: block;
+    padding: 16px 20px;
+    background: #708090;
+    color: white;
+    position: relative;
+}
+
+.menu-product-btn:hover{
+    background-color: #778899;
+}
+
+.menu-product-item{
+    background: white;
+    overflow: hidden;
+    transition: max-height 0.3s;
+    max-height: 0;
+}
+
+.menu-product-item a{
+    display: block;
+    padding: 16px 26px;
+    color: #708090;
+    font-size: 14px;
+    margin: 4px 0;
+    position: relative;
+    border-bottom: 1px solid #708090;
+}
+
+.menu-product-item input{
+	width: 100%;
+    margin: 16px 20px;
+    border: 2px solid #708090;
+    border-radius: 5px;
+    transition: 0.5s;
+}
+
+.menu-product-item button{
+	margin: 16px 5px;
+    border-radius: 7px;
+    background: #708090;
+    border-color: #708090;
+    color: white;
+    transition: 0.5s;
+}
+
+.menu-product-item button:hover{
+    border: 2px solid #708090;
+    border-radius: 7px;
+    background: white;
+    color: #708090;
+}
+
+.menu-product-item a:hover{
+    background-color: #EEEEEE;
+}
+
+.menu-product-item a:hover{
+    color: #708090;
+    text-decoration: none;
+}
+
+.menu-product-btn:hover{
+    color: white;
+    text-decoration: none;
+}
+
+.menu-product-drop:hover .menu-product-item{
+    max-height: 30em;
+}
+
+.title-menu-product{
+    padding: 15px 20px;
+    background: #708090;
+    width: 95%;
+    overflow: hidden;
+    border-bottom: 1px solid white;
+    color: white;
+    font-weight: 600;
+}
+
+/* Content of Index */
+.content{
+	margin-top: 10px;
+}
+
+/* List slide */
+.slider{
+	border: 1px solid #ddd;
+	box-shadow: 2px 2px 30px rgba(0,0,0,0.2);
+}
+
+.slide{
+	margin-bottom: 10px;
+}
+
+.editSlide{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+/* Top 6 new */
+.top6New{
+	border: 1px solid #ddd;
+	box-shadow: 2px 2px 30px rgba(0,0,0,0.2);
+}
+
+.top6New table {
+	width: 100%;
+}
+
+/* List new bill */
+.listNewBill{
+	border: 1px solid #ddd;
+	margin-top: 10px;
+	box-shadow: 2px 2px 30px rgba(0,0,0,0.2);
+}
+
+.listNewBill table {
+	width: 100%;
+}
+
+/* Form change slide */
+.changeSlide table{
+	width: 100%;
+}
+
+.changeSlide td{
+	padding: 10px;
+}
+
+/* Account detail */
+.accountDetail tr{
+	border-bottom: 2px solid black;
+}
+
+.accountDetail td{
+	padding: 10px;
+}
+
+.accountDetail .changeStatus{
+	float: right;
+}
+
+.accountDetail{
+	font-size: 25px;
+}
+
+/* Bill detail */
+.bill-confirm{
+	width: 500px;
+    padding: 40px;
+	margin: 0 auto;
+	margin-top: 50px;
+	margin-bottom: 50px;
+    background-color: white;
+    box-shadow: 2px 2px 30px rgba(0,0,0,0.2);
+    min-height: 700px;
+    font-family: Sans-serif;
+    color: gray;
+}
+
+.bill-confirm table{
+	width: 100%;
+}
+
+.bill-confirm-btn{
+	width: 100%;
+	margin-top: 30px;
+	border: 2px solid #708090;
+	background-color: white;
+	color: #708090;
+	transition: 0.25s;
+}
+
+.bill-confirm-btn:hover{
+	background-color: #708090;
+	color: white;
+	text-decoration: none;
+}
+
+.bill-note{
+	width: 100%;
+	margin-top: 5px;
+	border: 2px solid #BB0000;
+	background-color: white;
+	color: #BB0000;
+	transition: 0.25s;
+}
+
+.bill-note:hover{
+	background-color: #BB0000;
+	color: white;
+	text-decoration: none;
+}
+
+/* Product detail */
+.product-img img{
+    width: 100%;
+    display: block;
+}
+
+.img-display{
+    overflow: hidden;
+}
+
+.img-showcase{
+    display: flex;
+    width: 100%;
+    transition: all 0.5s ease;
+}
+
+.img-showcase img{
+    min-width: 100%;
+}
+
+.img-select{
+    display: flex;
+}
+
+.img-item{
+    margin: 0.3rem;
+}
+
+.img-item:nth-child(1),
+.img-item:nth-child(2),
+.img-item:nth-child(3){
+    margin-right: 0;
+}
+
+.img-item:hover{
+    opacity: 0.8;
+}
+
+/* Product detail */
+.productDetail tr{
+	border-bottom: 2px solid black;
+}
+
+.productDetail td{
+	padding: 10px;
+}
+
+.productDetail{
+	font-size: 20px;
+}

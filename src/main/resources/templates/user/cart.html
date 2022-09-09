@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="shortcut icon" th:href="@{~/Images/logo.png}">
+<link rel="stylesheet" type="text/css" th:href="@{~/CSS/mycss.css}">
+<script th:src="@{~/JS/myjs.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Juliicasta</title>
+</head>
+<body>
+	<div th:replace="user/menu :: menu"></div>
+	<div class="container cart-page">	
+			<table>
+				<tr>
+					<th>Sản phẩm</th>
+					<th>Số lượng</th>
+					<th>Thành tiền</th>
+				</tr>
+				<tr th:unless="${listCart}">
+					<td><h5 style="color: #DDDDDD" th:text="${nope}"></h5></td>
+				</tr>
+				<tr th:if="${listCart}"
+					th:each="cart, index:${listCart}">
+					<td>
+						<div class="cart-infor">
+							<img th:src="@{'~/Images/Products/'+${cart.imagename}}">
+							<div>
+								<p class="cart-productName" th:text="${cart.productname}"></p>
+								<small th:text="${'Size: '+cart.sizename}"></small> <br> <small
+									th:text="${'Color: '+cart.colorname}"></small> <br> <small
+									th:text="${'Price: '+cart.price+' VND'}"></small> <br> <a
+									th:onclick="'return deleteItem('+${cart.id}+')'" href="">Remove</a>
+							</div>
+						</div>
+					</td>
+					<td><strong th:if="${cart.quantity > 1}"><a
+							class="edit-quantity"
+							th:onclick="'return updateQuantity('+${cart.id}+','+${cart.quantity - 1}+')'"
+							href=""><i class="fa fa-minus-circle"></i></a></strong> <strong
+						th:if="${cart.quantity == 1}"><p style="display: inline;">
+								<i class="fa fa-minus-circle"></i>
+							</p></strong> <input id="quantity" name="quantity" class="cart-quantity"
+						readonly="readonly" th:value="${cart.quantity}"> <strong
+						th:if="${cart.quantity < 9}"><a class="edit-quantity"
+							th:onclick="'return updateQuantity('+${cart.id}+','+${cart.quantity + 1}+')'"
+							href=""><i class="fa fa-plus-circle"></i></a></strong> <strong
+						th:if="${cart.quantity == 9}"><p style="display: inline;">
+								<i class="fa fa-plus-circle"></i>
+							</p></strong></td>
+					<td th:text="${cart.price*cart.quantity+' VND'}"></td>
+				</tr>
+			</table>
+
+			<div class="total-price">
+				<table>
+					<tr>
+						<td>Tạm tính</td>
+						<td th:text="${p+' VND'}"></td>
+					</tr>
+					<tr>
+						<td>Phí ship</td>
+						<td th:text="${ship+' VND'}"></td>
+					</tr>
+					<tr>
+						<td><strong>Tổng</strong></td>
+						<td><strong style="color: red" th:text="${total+' VND'}"></strong></td>
+					</tr>
+					<tr>
+						<td colspan="2"><a th:href="@{'~/user/addBill/'+${session.user.id}}"
+								class="btn btn-danger order">Đặt hàng</a></td>
+					</tr>
+				</table>
+			</div>
+	</div>
+
+	<div th:replace="user/footer :: footer"></div>
+</body>
+</html>

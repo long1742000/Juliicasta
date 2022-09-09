@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="shortcut icon" th:href="@{~/Images/logo.png}">
+<link rel="stylesheet" type="text/css" th:href="@{~/CSS/mycss.css}">
+<script th:src="@{~/JS/myjs.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Juliicasta</title>
+</head>
+<body>
+	<div th:replace="user/menu :: menu"></div>
+
+	<div id="toast"></div>
+
+	<!-- <form method="post" th:action="@{~/user/addtocart}"> -->
+	<form id="addToCart">
+		<input name="ProductID" id="ProductID" th:value="${pro.id}"
+			hidden="true"> <input th:if="${session.user}"
+			name="AccountID" id="AccountID" th:value="${session.user.id}"
+			hidden="true">
+		<div class="container mt-3 mb-3 product">
+			<div class="card-wrapper">
+				<div class="card border-0 card-product">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-6">
+								<div class="product-img">
+									<div class="img-display">
+										<div id="mainImg" class="img-showcase">
+											<img th:src="@{'~/Images/Products/'+${pro.mainimage}}"
+												alt="product" />
+										</div>
+									</div>
+									<div class="img-select">
+										<div class="img-item">
+											<a name="imgItem"
+												th:onclick="'changeMainImage('+${pro.id}+')'" href="#">
+												<img th:src="@{'~/Images/Products/'+${pro.mainimage}}"
+												alt="product item" />
+											</a>
+										</div>
+										<div class="img-item" th:each="item:${listImage}">
+											<a name="imgItem" th:onclick="'changeImage('+${item.id}+')'"
+												href="#"> <img
+												th:src="@{'~/Images/Products/'+${item.name}}"
+												alt="product item" />
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-6">
+								<div class="product-content">
+									<h2 class="product-title" th:text="${pro.name}"></h2>
+									<p>
+										Loại sản phẩm: <a
+											th:href="@{'~/user/product?idCate='+${cate.id}+'&filter=0&page=1'}"
+											class="product-link" th:text="${cate.name}"></a>
+									</p>
+									<div class="product-price">
+										<p class="product-price"
+											th:text="'Price: '+${price}+' VND'"></p>
+									</div>
+								</div>
+								<div class="product-detail">
+									<h2>Chi tiết:</h2>
+									<p th:text="${pro.detail}"></p>
+
+									<ul>
+										<li th:unless="${listSize}">Size: Freesize</li>
+										<input th:unless="${listSize}" name="SizeID" id="SizeID"
+											value="1" hidden="true">
+										<li th:if="${listSize}">Size: <select class="chooseSize"
+											name="SizeID">
+												<option name="SizeID" id="SizeID" th:each="item:${listSize}"
+													th:value="${item.id}" th:text="${item.name}"></option>
+										</select>
+										</li>
+										<input th:unless="${listColor}" name="ColorID" id="ColorID"
+											value="1" hidden="true">
+										<li th:if="${listColor}">Màu:<div id="colorSelected"><div class="selected-color" th:style="'background-color:'+${defaultColor} "></div></div><br> <input
+											th:each="item:${listColor}" type="radio" name="ColorID"
+											id="ColorID" th:value="${item.id}"
+											th:id="'color-'+${item.id}" hidden="true" th:onclick="'return choose('+${item.id}+')'"> <label
+											th:each="item:${listColor}"
+											th:styleappend="'background-color: '+${item.code}"
+											th:for="'color-'+${item.id}"></label>
+										</li>
+									</ul>
+								</div>
+
+								<div class="purchase-inf">
+									<button th:if="${session.user}" id="addCart"
+										class="btn-addtocart">
+										Thêm vào giỏ hàng <i class="fa fa-shopping-cart"></i>
+									</button>
+									<a th:unless="${session.user}" href="#" class="btn-addtocart"
+										type="button" data-toggle="modal" data-target="#login">Thêm
+										vào giỏ hàng <i class="fa fa-shopping-cart"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+	<div class="container" style="height: 270px;">
+		<div class="col-12">
+			<hr>
+			<h4>
+				<strong>NHẬN XÉT</strong>
+			</h4>
+			<form th:action="@{/user/comment}" th:object="${commentForm}"
+				method="post">
+				<input th:if="${session.user}" name="accountid"
+					th:value="${session.user.id}" hidden="true"> <input
+					name="productid" th:value="${pro.id}" hidden="true">
+				<textarea name="content" class="comment" style="width: 100%"
+					placeholder="Nói gì đó về sản phẩm này..." minlength="3" rows="4"
+					required="required"></textarea>
+				<button th:if="${session.user}" class="send-comment" type="submit">Gửi</button>
+			</form>
+			<a th:unless="${session.user}" class="send-comment" type="button"
+				th:href="@{/user/login}" data-toggle="modal" data-target="#login">Gửi</a>
+		</div>
+	</div>
+	<div class="container card-body">
+		<div class="container"
+			style="min-height: 200px; font-family: cursive;">
+			<div id="comment-item" class="comment-item col-12"
+				th:if="${listComment}" th:each="comment, item:${listComment}">
+				<strong th:text="${account}"></strong>
+				<p th:text="${comment.content}"></p>
+				<br>
+			</div>
+			<div th:unless="${listComment}">
+				<h5 style="color: #DDDDDD">Chưa có lời nhận xét nào về sản phẩm
+					này</h5>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<hr>
+		<h4>
+			<strong>CÁC SẢN PHẨM TƯƠNG TỰ</strong>
+		</h4>
+		<div class="container-fluid">
+			<div th:if="${listProduct}" class="row" id="content">
+				<div th:each="item:${listProduct}" class="col-3 mt-3">
+					<div class="box m-auto">
+						<div class="slide-img">
+							<img th:src="@{'~/Images/Products/'+${item.mainimage}}" alt="1" />
+							<div class="overlay">
+								<a th:href="@{'~/user/product/detail/'+${item.id}}"
+									class="buy-btn">Chi tiết</a>
+							</div>
+						</div>
+						<div class="detail-box">
+							<div class="type">
+								<a th:text="${item.name}"></a> <span th:text="${item.code}"></span>
+							</div>
+							<span class="price" th:text="${item.price} + ' VND'"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="min-height: 200px" th:unless="${listProduct}">
+				<h5 style="color: #DDDDDD">Hiện chưa có sản phẩm tương tự</h5>
+			</div>
+		</div>
+	</div>
+	<div th:replace="user/footer :: footer"></div>
+	<div class="modal fade" id="login" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Juliicasta</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<p th:text="${please}"></p>
+				</div>
+				<div class="modal-footer">
+					<a class="cancel-btn" href="#" data-dismiss="modal">Hủy</a> <a
+						class="logout-btn" th:href="@{/user/login}">Đăng nhập</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script>
+		function toast({
+			mess = '',
+			duration = 4000
+		}){
+			const main = document.getElementById('toast');
+			if(main){
+				const toast = document.createElement('div');
+				toast.classList.add('msg', 'toast--add')
+				toast.innerHTML = '<div class="toast_icon"><i class="fa fa-shopping-cart"></i> '+mess+'</div>';
+				main.appendChild(toast);
+			}
+		}
+		
+		$("#addCart").click(function(event) {
+			event.preventDefault();
+			var formdata = $("#addToCart").serializeArray();
+			json = {};
+			$.each(formdata, function(i, field) {
+				json[field.name] = field.value;
+			});
+
+			$.ajax({
+				url: "/user/addtocart",
+				type: 'get',
+				data: {
+					datajson: JSON.stringify(json)
+				},
+				success: function() {
+					toast({
+						mess: '+1',
+						duration: 4000
+					})
+				}
+			});
+			console.log(json);
+		})
+		
+		function choose(param){
+			var colorId = param;
+			$.ajax({
+				url: "/user/product/chooseColor",
+				type: 'get',
+				data: {
+					colorId: colorId
+				},
+				success: function(data) {
+					var row = document.getElementById("colorSelected");
+					row.innerHTML = data;
+				},
+				error: function(xhr) {
+					// Hmmm
+				}
+			})
+		}
+	</script>
+</body>
+</html>

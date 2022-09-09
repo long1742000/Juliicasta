@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="shortcut icon" th:href="@{~/Images/logo.png}">
+<link rel="stylesheet" type="text/css" th:href="@{~/CSS/CssOfAdmin.css}">
+<script th:src="@{~/JS/JSOfAdmin.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title th:if="${user.role=='ROLE_ADMIN'}">Manager Julicasta</title>
+<title th:if="${user.role=='ROLE_EMPLOYEE'}">Julicasta staff</title>
+
+<link rel="stylesheet"
+	href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" />
+
+</head>
+<body>
+	<div th:replace="admin/top_navbar :: top_navbar"></div>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-2 menu-product">
+				<div th:replace="admin/menu :: menu"></div>
+			</div>
+			<div style="margin-bottom: 50px;" class="col-10">
+				<div class="container-fluid content">
+					<h1>Chi tiết sản phẩm</h1>
+					<div class="row">
+						<div class="col-4">
+							<div class="product-img">
+								<div class="img-display">
+									<div id="mainImg" class="img-showcase">
+										<img th:src="@{'~/Images/Products/'+${pro.mainimage}}"
+											alt="product" />
+									</div>
+								</div>
+								<div class="img-select">
+									<div class="img-item">
+										<a name="imgItem"
+											th:onclick="'changeMainImage('+${pro.id}+')'" href="#">
+											<img th:src="@{'~/Images/Products/'+${pro.mainimage}}"
+											alt="product item" />
+										</a>
+									</div>
+									<div class="img-item" th:each="item:${listImage}">
+										<a name="imgItem" th:onclick="'changeImage('+${item.id}+')'"
+											href="#"> <img
+											th:src="@{'~/Images/Products/'+${item.name}}"
+											alt="product item" />
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-8">
+							<table class="productDetail">
+								<tr>
+									<td><strong>Code:</strong></td>
+									<td th:text="${pro.code}"></td>
+								</tr>
+								<tr>
+									<td><strong>Tên sản phẩm:</strong></td>
+									<td th:text="${pro.name}"></td>
+								</tr>
+								<tr>
+									<td><strong>Mô tả:</strong></td>
+									<td th:text="${pro.detail}"></td>
+								</tr>
+								<tr th:unless="${pro.havesize}">
+									<td><strong>Size:</strong></td>
+									<td>Freesize</td>
+								</tr>
+								<tr th:unless="${pro.havecolor}">
+									<td><strong>Màu:</strong></td>
+									<td>Mặc định</td>
+								</tr>
+								<tr>
+									<td><strong>Giá:</strong></td>
+									<td th:text="${pro.price}+' VND'"></td>
+								</tr>
+								<tr th:if="${quantity}">
+									<td><p><strong>Tồn kho:</strong></p></td>
+									<td><p th:text="${quantity}"></p></td>
+								</tr>
+							</table>
+							<a th:if="${quantity}" style="float: right; margin-top: 20px" href="#" class="btn btn-primary">Nhập kho</a>
+							<h2 th:if="${listDetail}">Tồn kho</h2>
+							<table th:if="${listDetail}" style="width: 50%">
+								<tr style="border-bottom: 1px solid black;">
+									<th>Size</th>
+									<th>Màu</th>
+									<th>Còn lại</th>
+								</tr>
+								<tr th:each="item, index:${listDetail}">
+									<td th:text="${item.sizename}">Size</td>
+									<td th:text="${item.colorname}">Màu</td>
+									<td th:text="${item.quantity}">Còn lại</td>
+									<td><a style="float: right;" href="#" class="btn btn-primary">Nhập kho</a></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+	</div>		
+	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+	<script
+		src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$('#example').DataTable();
+		});
+	</script>
+</body>
+</html>

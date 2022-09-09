@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<link rel="shortcut icon" th:href="@{~/Images/logo.png}">
+<link rel="stylesheet" type="text/css" th:href="@{~/CSS/mycss.css}">
+<script th:src="@{~/JS/myjs.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<title>Juliicasta</title>
+</head>
+<body class="contact-page">
+	<div th:replace="user/menu :: menu"></div>
+	<div class="div-contact container-fluid">
+		<section class="contact">
+			<div class="content">
+				<h2>Liên hệ với chúng tôi</h2>
+				<p>Nếu có bất kì thắc mắc hoặc ý kiến nào liên quan đến sản phẩm, đơn hàng hoặc những vấn đề liên quan đến đơn hàng, hãy liên hệ chúng tôi để biết thêm chi tiết.</p>				
+			</div>
+			<div class="contact-container">
+				<div class="contactInfor">
+					<div class="contact-box">
+						<div class="icon"><i class="fa fa-phone-square" aria-hidden="true"></i></div>
+						<div class="text">
+							<h3>Hotline</h3>
+							<p>0366310650</p>
+						</div>
+					</div>
+					<div class="contact-box">
+						<div class="icon"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+						<div class="text">
+							<h3>Email</h3>
+							<p>phamduylong1742000@gmail.com</p>
+						</div>
+					</div>
+					<div class="contact-box">
+						<div class="icon"><i class="fa fa-facebook-official" aria-hidden="true"></i></div>
+						<div class="text">
+							<h3>Facebook</h3>
+							<p>https://www.facebook.com/Juliicasta-112431903877614</p>
+						</div>
+					</div>
+					<div class="contact-box">
+						<div class="icon"><i class="fa fa-instagram" aria-hidden="true"></i></div>
+						<div class="text">
+							<h3>Instagram</h3>
+							<p>https://www.instagram.com/juliicasta/</p>
+						</div>
+					</div>
+				</div>
+				<div class="contactForm">
+					<form name="contactForm" th:action="@{~/user/sendContact}" method="post">
+						<h2>Câu hỏi/Ý kiến của bạn</h2>
+						<div class="inputBox">
+							<input th:if="${session.user}" th:value="${session.user.fullname}" class="no-outline" type="text" name="fullname" required="required" autocomplete="off">
+							<input th:unless="${session.user}" class="no-outline" type="text" name="fullname" required="required" autocomplete="off">
+							<span>Họ và tên</span>
+						</div>
+						<div class="inputBox">
+							<input th:if="${session.user}" th:value="${session.user.phone}" class="no-outline" type="text" name="phone" required="required" autocomplete="off">
+							<input th:unless="${session.user}" class="no-outline" type="text" name="phone" required="required" autocomplete="off">
+							<span>Số điện thoại</span>
+						</div>
+						<div class="inputBox">
+							<select class="no-outline" name="type" required="required">
+								<option>Liên quan đến sản phẩm</option>
+								<option>Liên quan đến đơn hàng</option>
+								<option>Về chính sách đổi trả</option>
+								<option>Khác</option>
+							</select>
+						</div>
+						<div class="inputBox">
+							<textarea name="content" class="no-outline" required="required"></textarea>
+							<span>Nội dung</span>
+							<input type="checkbox" name="status" value="false" checked="checked" hidden="true"> 
+						</div>
+						<div class="inputBox">
+							<button type="submit">Gửi</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
+	</div>
+	<div th:replace="user/footer :: footer"></div>
+		<script th:inline="javascript">
+		var er = /*[[${er}]]*/ "Test";
+		swal("Oops", er, "error")
+	</script>
+	<script th:inline="javascript">
+		var ok = /*[[${ok}]]*/ "Test";
+		swal("Success", ok, "success")
+	</script>
+</body>
+</html>
